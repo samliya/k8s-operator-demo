@@ -114,6 +114,9 @@ func (c *controller) processNextItem() bool {
 	return true
 }
 
+// 追踪 service的活动
+// 若为删除，则删除对应的ing资源
+// 若为新增，则创建起对应的ing资源
 func (c *controller) syncService(key string) error {
 	namespaceKey, name, err := cache.SplitMetaNamespaceKey(key)
 	if err != nil {

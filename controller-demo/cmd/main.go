@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/samliya/k8s-operator-demo/controller-demo/nginx-controller/pkg"
 	"k8s.io/client-go/informers"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/tools/clientcmd"
+	"k8s.io/client-go/rest"
+	"samliya/k8s-operator-demo/controller-demo/pkg"
 )
 
 func main() {
@@ -12,7 +12,9 @@ func main() {
 	//2.ClientSet
 	//3.informer
 	//4.informer.Start
-	cfg, err := clientcmd.BuildConfigFromFlags("", "/Users/Zhuanz/.kube/config")
+
+	//部署在kind集群中，容器内部，Kubernetes会自动挂载/var/run/secrets/kubernetes.io/serviceaccount路径
+	cfg, err := rest.InClusterConfig()
 	if err != nil {
 		panic(err.Error())
 	}
