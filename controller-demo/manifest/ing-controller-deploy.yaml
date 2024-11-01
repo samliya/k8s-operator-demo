@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ing-controller
+  name: ing-controller
+  #namespace: ing-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ing-controller
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: ing-controller
+    spec:
+      serviceAccountName: ing-sa
+      containers:
+      - image: controller-demo:v1
+        name: controller-demo
+        resources: {}
