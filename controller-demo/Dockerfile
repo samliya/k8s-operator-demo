@@ -1,17 +1,20 @@
-# Build the manager binary
-FROM golang:1.23 AS builder
+FROM golang:alpine AS builder
+
+# 为我们的镜像设置必要的环境变量
+ENV GO111MODULE=on \
+    GOPROXY=https://goproxy.cn,direct \
+    CGO_ENABLED=0 \
+    GOOS=linux \
+    GOARCH=amd64
 
 WORKDIR /workspace
 
-COPY go.mod go.mod
+COPY . .
 
-COPY go.sum go.sum
+RUN go mod download && go build -o controller ./cmd/
 
-RUN go mod download
+FROM alpine
 
-COPY cmd/main.go cmd/main.go
+COPY --from=builder /workspace/controller /
 
-RUN CGO_ENABLED=0 GOOS=${TARGETOS:-linux} GOARCH=${TARGETARCH} go build -a -o manager cmd/main.go
-
-
-ENTRYPOINT ["./workspace/manager"]
+ENTRYPOINT ["/controller"]

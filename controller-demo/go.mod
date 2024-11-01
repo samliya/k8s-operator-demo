@@ -1,4 +1,4 @@
-module github.com/samliya/k8s-operator-demo/controller-demo/nginx-controller
+module samliya/k8s-operator-demo/controller-demo
 
 go 1.23.1
 
