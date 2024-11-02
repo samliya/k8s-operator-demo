@@ -66,5 +66,5 @@ serviceaccount/ing-sa unchanged
 var cfg *rest.Config
 var err error
 cfg, err = rest.InClusterConfig() 
-2. deployment没有设置serviceAccount，默认使用的default sa，权限认证过不去
 ```
+2. deployment没有设置serviceAccount，默认使用的default sa，权限认证过不去
